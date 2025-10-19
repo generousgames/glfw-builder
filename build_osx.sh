@@ -14,8 +14,9 @@ mkdir -p ${BUILD_DIR}
 mkdir -p ${PROJECT_DIR}
 
 ################################################################################
+# Setup submodules.
 
-################################################################################
+git submodule update --init --recursive
 
 BUILD_PATCH="$ROOT/build_osx.patch"
 pushd dependencies/glfw
@@ -24,7 +25,6 @@ pushd dependencies/glfw
     # Apply patch
     git apply ${BUILD_PATCH}
 popd
-
 
 ################################################################################
 # Configure.
