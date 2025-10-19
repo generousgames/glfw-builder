@@ -15,6 +15,8 @@ mkdir -p ${PROJECT_DIR}
 
 ################################################################################
 
+################################################################################
+
 BUILD_PATCH="$ROOT/build_osx.patch"
 pushd dependencies/glfw
     git checkout tags/${REPOSITORY_TAG}
@@ -46,15 +48,12 @@ pushd ${PROJECT_DIR}
     -DGLFW_BUILD_DOCS=OFF \
     -DGLFW_INSTALL=OFF \
     \
-    -sdk macosx \
-    \
     ${PROJECT_SOURCE_DIR}
 
     xcodebuild \
     -project ${PROJECT_FILE} \
     -scheme ${PROJECT_SCHEME} \
     -configuration Release \
-    -sdk macosx \
     -arch arm64 \
     -arch x86_64 \
     -quiet
@@ -63,7 +62,6 @@ pushd ${PROJECT_DIR}
     -project ${PROJECT_FILE} \
     -scheme ${PROJECT_SCHEME} \
     -configuration Debug \
-    -sdk macosx \
     -arch arm64 \
     -arch x86_64 \
     -quiet
