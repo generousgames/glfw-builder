@@ -4,12 +4,30 @@ NAME="glfw"
 VERSION="3.3.2"
 PLATFORM="osx"
 
+################################################################################
+# Parse input parameters.
+
+if [[ "$1" != "Debug" && "$1" != "Release" ]]; then
+  echo "Error: First parameter must be 'Debug' or 'Release'."
+  exit 1
+fi
+
+BUILD_TYPE="$1"
+
+################################################################################
+# Setup paths / directories.
+
 ROOT=`pwd`
 PROJECT_DIR="$ROOT/project/${PLATFORM}"
 BUILD_DIR="$ROOT/build/${PLATFORM}"
 OUTPUT_DIR="$ROOT/output"
 LIB_DIR="$BUILD_DIR/libs"
 BIN_DIR="$BUILD_DIR/bins"
+
+rm -rf ${BUILD_DIR}
+mkdir -p ${BUILD_DIR}
+mkdir -p ${PROJECT_DIR}
+mkdir -p ${OUTPUT_DIR}
 
 ################################################################################
 # Generate ABI hash.
@@ -37,7 +55,6 @@ fi
 
 # Detect C++ standard and flags (if CXXFLAGS set, use it)
 CXXSTD=${CXXSTD:-c++20}
-BUILD_TYPE=${BUILD_TYPE:-Release}
 
 # Compose a fingerprint string
 FINGERPRINT="$CXX_ID|$OS|$ARCH|$OS_VER|$CRT|$CXXSTD|$BUILD_TYPE"
@@ -54,13 +71,6 @@ echo "ABI hash: $ABI_HASH"
 # echo "$ABI_HASH" > abi_hash.txt
 
 ################################################################################
-
-rm -rf ${BUILD_DIR}
-mkdir -p ${BUILD_DIR}
-mkdir -p ${PROJECT_DIR}
-mkdir -p ${OUTPUT_DIR}
-
-################################################################################
 # Setup submodules.
 
 git submodule update --init --recursive
@@ -73,15 +83,13 @@ pushd dependencies/glfw
     git apply ${BUILD_PATCH}
 popd
 
+
 ################################################################################
-# Configure.
+# Build.
 
 PROJECT_SOURCE_DIR="${ROOT}/dependencies/glfw"
 PROJECT_FILE="GLFW.xcodeproj"
 PROJECT_SCHEME="ALL_BUILD"
-
-################################################################################
-# Build.
 
 pushd ${PROJECT_DIR}
     cmake -G "Xcode" \
@@ -100,22 +108,14 @@ pushd ${PROJECT_DIR}
     xcodebuild \
     -project ${PROJECT_FILE} \
     -scheme ${PROJECT_SCHEME} \
-    -configuration Release \
-    -arch arm64 \
-    -arch x86_64 \
-    -quiet
-
-    xcodebuild \
-    -project ${PROJECT_FILE} \
-    -scheme ${PROJECT_SCHEME} \
-    -configuration Debug \
+    -configuration ${BUILD_TYPE} \
     -arch arm64 \
     -arch x86_64 \
     -quiet
 popd
 
 ################################################################################
-# Package.
+# Package to output directory.
 
 pushd ${OUTPUT_DIR}
     PREBUILT_DIR="${NAME}-${VERSION}-${ABI_HASH}"
@@ -123,7 +123,7 @@ pushd ${OUTPUT_DIR}
 
     cp -rf ${ROOT}/dependencies/glfw/LICENSE.md ${PREBUILT_DIR}/LICENSE.md
     cp -rf ${ROOT}/dependencies/glfw/include/* ${PREBUILT_DIR}/include
-    cp -rf ${LIB_DIR} ${PREBUILT_DIR}/libs
+    cp -rf ${LIB_DIR}/${BUILD_TYPE} ${PREBUILT_DIR}/libs
 
     zip -r ${PREBUILT_DIR}.zip ${PREBUILT_DIR}
 popd
