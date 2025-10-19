@@ -62,7 +62,7 @@ FINGERPRINT="$CXX_ID|$OS|$ARCH|$OS_VER|$CRT|$CXXSTD|$BUILD_TYPE"
 # FINGERPRINT="$FINGERPRINT|$CXXFLAGS"
 
 # Hash it to a short token (first 8 hex chars of SHA1)
-ABI_HASH=$(echo -n "$FINGERPRINT" | sha1sum | cut -c1-8)
+ABI_HASH=$(echo -n "$FINGERPRINT" | shasum | cut -c1-8)
 
 echo "ABI fingerprint: $FINGERPRINT"
 echo "ABI hash: $ABI_HASH"
