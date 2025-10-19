@@ -6,6 +6,7 @@
 # Project files / folders
 build/
 project/
+output/
 
 # Node artifact files
 node_modules/
