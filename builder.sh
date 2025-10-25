@@ -22,18 +22,37 @@ setup() {
     popd
 }
 
-# Build (local host) app target.
-build_dep() {
-    BUILD_TARGET=${1:-}
-    BUILD_TYPE=${2:-}
+# Builds the dependency given a CMake preset name.
+build() {
+    PRESET_NAME=${1:-}
 
     pushd dependencies/prebuild-utils
         source ./setup.sh
-        npm run dev build_dep "$BUILD_TARGET" "$BUILD_TYPE"
+        npm run dev build "$PRESET_NAME"
     popd
 }
 
-# Build (local host) app target.
+# Bundles the dependency given a build type.
+bundle() {
+    PRESET_NAME=${1:-}
+
+    pushd dependencies/prebuild-utils
+        source ./setup.sh
+        npm run dev bundle "$PRESET_NAME"
+    popd
+}
+
+# Deploys the dependency given a CMake preset name.
+deploy() {
+    PRESET_NAME=${1:-}
+
+    pushd dependencies/prebuild-utils
+        source ./setup.sh
+        npm run dev deploy "$PRESET_NAME"
+    popd
+}
+
+# Clean temporary directories.
 clean() {
     pushd dependencies/prebuild-utils
         source ./setup.sh
@@ -50,8 +69,14 @@ case "$COMMAND" in
     setup)
         setup
         ;;
-    build_dep)
-        build_dep "${@:2}"
+    build)
+        build "${@:2}"
+        ;;
+    bundle)
+        bundle "${@:2}"
+        ;;
+    deploy)
+        deploy "${@:2}"
         ;;
     clean)
         clean
