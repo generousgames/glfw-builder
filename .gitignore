@@ -5,7 +5,7 @@
 
 # Project files / folders
 build/
-project/
+projects/
 output/
 
 # Node artifact files
