@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.21)
+cmake_minimum_required(VERSION 3.27)
 
 # Name this meta-project anything; GLFW defines its own project() inside.
 project(glfw-builder LANGUAGES C CXX)

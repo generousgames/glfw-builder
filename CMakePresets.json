@@ -7,8 +7,8 @@
       "toolchainFile": "${sourceDir}/dependencies/prebuild-utils/toolchains/osx.cmake",
       "binaryDir": "${sourceDir}/projects/macos-arm64-Release",
       "cacheVariables": {
-        "CMAKE_OSX_ARCHITECTURES": "arm64",
-        "CMAKE_OSX_DEPLOYMENT_TARGET": "12.0",
+        "CMAKE_OSX_ARCHITECTURES": "$env{PREBUILD_ARCH}",
+        "CMAKE_OSX_DEPLOYMENT_TARGET": "$env{PREBUILD_OSX_DEPLOYMENT_TARGET}",
         "CMAKE_BUILD_TYPE": "Release",
         "BUILD_SHARED_LIBS": "OFF",
         "GLFW_BUILD_EXAMPLES": "OFF",
@@ -22,8 +22,8 @@
       "toolchainFile": "${sourceDir}/dependencies/prebuild-utils/toolchains/osx.cmake",
       "binaryDir": "${sourceDir}/projects/macos-arm64-Debug",
       "cacheVariables": {
-        "CMAKE_OSX_ARCHITECTURES": "arm64",
-        "CMAKE_OSX_DEPLOYMENT_TARGET": "12.0",
+        "CMAKE_OSX_ARCHITECTURES": "$env{PREBUILD_ARCH}",
+        "CMAKE_OSX_DEPLOYMENT_TARGET": "$env{PREBUILD_OSX_DEPLOYMENT_TARGET}",
         "CMAKE_BUILD_TYPE": "Debug",
         "BUILD_SHARED_LIBS": "OFF",
         "GLFW_BUILD_EXAMPLES": "OFF",
