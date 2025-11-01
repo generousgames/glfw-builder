@@ -1,14 +1,27 @@
 #!/bin/bash
 
-# (1) Exit on error
-# (2) Fail on unset variables
-# (3) Fail on pipe failure
-set -euo pipefail
+NAME="glfw"
+VERSION="3.3.2"
 
 ################################################################################
 
-NAME="glfw"
-VERSION="3.3.2"
+# (e) Exit on error
+# (u) Fail on unset variables
+# (o) Fail on pipe failure
+set -eo pipefail
+
+# Load AWS credentials from .env file.
+if [ -z "${AWS_ACCESS_KEY_ID}" ] || [ -z "${AWS_SECRET_ACCESS_KEY}" ]; then
+  if [ -f ".env" ]; then
+    echo "Loading credentials from .env..."
+    # Export all vars defined in .env
+    # Ignore comments (#...) and blank lines
+    export $(grep -v '^[#[:space:]]' .env | xargs)
+  else
+    echo "Error: AWS credentials not set and .env not found."
+    exit 1
+  fi
+fi
 
 ################################################################################
 # Commands
@@ -84,14 +97,15 @@ usage() {
 }
 
 ################################################################################
-# Command processing.
 
+# Make sure a command is provided.
 if [ $# -eq 0 ]; then
     usage
     exit 1
 fi
 COMMAND=$1
 
+# Process the command.
 case "$COMMAND" in
     setup)
         setup

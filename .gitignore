@@ -8,6 +8,7 @@ build/
 projects/
 output/
 bundles/
+.env
 
 # Node artifact files
 node_modules/
