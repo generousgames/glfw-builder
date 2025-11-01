@@ -3,9 +3,8 @@
     "version": "3.3.2",
     "configs": {
         "macos-arm64-Release": {
-            "cmake_preset": "macos-arm64-Release",
-            "target": {
-                "type": "macos",
+            "platform": {
+                "os": "macos",
                 "arch": "arm64",
                 "build_type": "Release"
             },
@@ -22,9 +21,8 @@
             }
         },
         "macos-arm64-Debug": {
-            "cmake_preset": "macos-arm64-Debug",
-            "target": {
-                "type": "macos",
+            "platform": {
+                "os": "macos",
                 "arch": "arm64",
                 "build_type": "Debug"
             },
