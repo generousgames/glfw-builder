@@ -3,42 +3,70 @@
     "version": "3.3.2",
     "configs": {
         "macos-arm64-Release": {
+            "namespace": "deps",
             "platform": {
                 "os": "macos",
                 "arch": "arm64",
                 "build_type": "Release"
             },
             "compiler": {
-                "c_compiler": "clang",
-                "cxx_compiler": "clang++",
+                "c": "clang",
+                "cpp": "clang++"
+            },
+            "language": {
+                "c_std": "c17",
+                "cpp_std": "c++20",
+                "rtti": false,
+                "exceptions": false
+            },
+            "code_gen": {
+                "build_type": "Release",
+                "link_type": "Static",
+                "optimization": "-O3"
+            },
+            "runtime": {
                 "stdlib": "libc++",
-                "cxx_std": "c++20",
-                "cxx_flags": "",
-                "options": {
-                    "osx": {
-                        "deployment_target": "12.0"
-                    }
+                "deployment_target": "12.0"
+            },
+            "output": [
+                {
+                    "name": "glfw",
+                    "path": "libglfw3.a"
                 }
-            }
+            ]
         },
         "macos-arm64-Debug": {
+            "namespace": "deps",
             "platform": {
                 "os": "macos",
                 "arch": "arm64",
                 "build_type": "Debug"
             },
             "compiler": {
-                "c_compiler": "clang",
-                "cxx_compiler": "clang++",
+                "c": "clang",
+                "cpp": "clang++"
+            },
+            "language": {
+                "c_std": "c17",
+                "cpp_std": "c++20",
+                "rtti": false,
+                "exceptions": false
+            },
+            "code_gen": {
+                "build_type": "Debug",
+                "link_type": "Static",
+                "optimization": "-O0"
+            },
+            "runtime": {
                 "stdlib": "libc++",
-                "cxx_std": "c++20",
-                "cxx_flags": "",
-                "options": {
-                    "osx": {
-                        "deployment_target": "12.0"
-                    }
+                "deployment_target": "12.0"
+            },
+            "output": [
+                {
+                    "name": "glfw",
+                    "path": "libglfw3.a"
                 }
-            }
+            ]
         }
     },
     "options": {
