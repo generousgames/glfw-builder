@@ -1,6 +1,10 @@
 {
     "name": "glfw",
     "version": "3.3.2",
+    "license_files": [
+        "dependencies/glfw/LICENSE.md"
+    ],
+    "header_dir": "dependencies/glfw/include",
     "configs": {
         "macos-arm64-Release": {
             "namespace": "deps",
