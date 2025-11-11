@@ -3,9 +3,27 @@ cmake_minimum_required(VERSION 3.27)
 # Name this meta-project anything; GLFW defines its own project() inside.
 project(glfw-builder LANGUAGES C CXX)
 
+########################################################
+# Prebuild specific configuration.
+
 # Prebuild utils directory.
 set(PREBUILD_UTILS_DIR "${CMAKE_SOURCE_DIR}/dependencies/prebuild-utils")  # wherever you put it
-include("${PREBUILD_UTILS_DIR}/cmake/abi.cmake")
+
+# Setup environment variables.
+include("${PREBUILD_UTILS_DIR}/cmake/env.cmake")
+
+# Detect and write ABI information.
+build_write_abi_json("${CMAKE_BINARY_DIR}")
+message(STATUS "BUILD_TRIPLE = ${BUILD_TRIPLE}")
+message(STATUS "ABI JSON : ${BUILD_ABI_JSON_PATH}")
+message(STATUS "ABI HASH : ${BUILD_ABI_HASH}")
+
+# Setup build configuration based on the manifest.
+set(MANIFEST_FILE "${CMAKE_SOURCE_DIR}/manifest.json")
+include("${PREBUILD_UTILS_DIR}/cmake/patch.cmake")
+
+########################################################
+# Target library build configuration.
 
 # Allow passing shared/common options from presets/CLI:
 # (Your presets already set these as cache variables.)
@@ -44,11 +62,7 @@ set(BUILD_SHARED_LIBS ${BUILD_SHARED_LIBS} CACHE BOOL "" FORCE)
 # Add GLFW as a subdir; it defines targets like 'glfw'/'glfw3'
 add_subdirectory("${GLFW_SOURCE_DIR}" "${CMAKE_BINARY_DIR}/glfw")
 
-# Detect and write ABI information.
-build_write_abi_json("${CMAKE_BINARY_DIR}")
-message(STATUS "BUILD_TRIPLE = ${BUILD_TRIPLE}")
-message(STATUS "ABI JSON : ${BUILD_ABI_JSON_PATH}")
-message(STATUS "ABI HASH : ${BUILD_ABI_HASH}")
+########################################################
 
 
 # If you want to expose an ALIAS with a stable name for packaging:
