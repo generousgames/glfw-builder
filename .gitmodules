@@ -1,6 +1,3 @@
 [submodule "dependencies/glfw"]
 	path = dependencies/glfw
 	url = https://github.com/glfw/glfw.git
-[submodule "dependencies/prebuild-utils"]
-	path = dependencies/prebuild-utils
-	url = git@github.com:generousgames/prebuild-utils.git
