@@ -7,10 +7,10 @@ project(glfw-builder LANGUAGES C CXX)
 # Prebuild specific configuration.
 
 # Prebuild utils directory.
-set(PREBUILD_UTILS_DIR "${CMAKE_SOURCE_DIR}/dependencies/prebuild-utils")  # wherever you put it
+set(MIMI_PKG_CMAKE_DIR "${CMAKE_SOURCE_DIR}/node_modules/@generousgames/mimi-pkg/cmake")
 
 # Setup environment variables.
-include("${PREBUILD_UTILS_DIR}/cmake/env.cmake")
+include("${MIMI_PKG_CMAKE_DIR}/env.cmake")
 
 # Detect and write ABI information.
 build_write_abi_json("${CMAKE_BINARY_DIR}")
@@ -20,7 +20,7 @@ message(STATUS "ABI HASH : ${BUILD_ABI_HASH}")
 
 # Setup build configuration based on the manifest.
 set(MANIFEST_FILE "${CMAKE_SOURCE_DIR}/manifest.json")
-include("${PREBUILD_UTILS_DIR}/cmake/patch.cmake")
+include("${MIMI_PKG_CMAKE_DIR}/patch.cmake")
 
 ########################################################
 # Target library build configuration.

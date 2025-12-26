@@ -4,7 +4,7 @@
     {
       "name": "macos-arm64-Release",
       "generator": "Xcode",
-      "toolchainFile": "${sourceDir}/dependencies/prebuild-utils/toolchains/osx.cmake",
+      "toolchainFile": "${sourceDir}/node_modules/@generousgames/mimi-pkg/cmake/toolchains/osx.cmake",
       "binaryDir": "${sourceDir}/projects/macos-arm64-Release",
       "cacheVariables": {
         "CMAKE_OSX_ARCHITECTURES": "$env{BUILD_ARCH}",
@@ -19,7 +19,7 @@
     {
       "name": "macos-arm64-Debug",
       "generator": "Xcode",
-      "toolchainFile": "${sourceDir}/dependencies/prebuild-utils/toolchains/osx.cmake",
+      "toolchainFile": "${sourceDir}/node_modules/@generousgames/mimi-pkg/cmake/toolchains/osx.cmake",
       "binaryDir": "${sourceDir}/projects/macos-arm64-Debug",
       "cacheVariables": {
         "CMAKE_OSX_ARCHITECTURES": "$env{BUILD_ARCH}",
